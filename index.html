@@ -136,6 +136,7 @@ function getPhotos()
   'GET',
   {"fields":"icon"},
   function(response) {
+	   console.log(response);
 	  $.each(response.data, function( index, value ) {
   	var img = new Image();
 	img.src = value.icon;
