@@ -137,12 +137,12 @@ function getPhotos()
   {"fields":"icon"},
   function(response) {
 	   console.log(response);
-	  $.each(response.data, function( index, value ) {
+	 /* $.each(response.data, function( index, value ) {
   	var img = new Image();
 	img.src = value.icon;
 		  console.log(value.icon);
 		  octx.drawImage(img, index*20, index*20,20,20);
-});
+});*/
       
   }
 );
