@@ -20,7 +20,7 @@ margin: 0 0 0 0;
 <script>
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '166703637073294',
+      appId      : '238878756522448',
       xfbml      : true,
       version    : 'v2.8'
     });
@@ -39,7 +39,7 @@ margin: 0 0 0 0;
 <script>
 // Only works after `FB.init` is called
 function myFacebookLogin() {
-  FB.login(function(){}, {scope: 'publish_actions'});
+  FB.login(function(){}, {scope: 'publish_actions,user_photos'});
 }
 </script>
 <body>
@@ -54,13 +54,14 @@ function myFacebookLogin() {
 
 <script>
 var img = new Image();
-img.src = 'http://combiboilersleeds.com/images/rose/rose-0.jpg';
+img.src = './rose.jpg';
 var canvas = document.getElementById('canvas');
 var output = document.getElementById('output');
 var ctx = canvas.getContext('2d');
 var octx = output.getContext('2d');
-
-octx.globalAlpha=0.2;
+var allImages = new Array();;
+var allImagesStatus = new Array();
+//octx.globalAlpha=0.2;
 
 var color = document.getElementById('color');
 var text =  document.getElementById('divColor');
@@ -111,46 +112,109 @@ var tr = $('<tr></tr>');
 }
 
 $(document).ready(function(){
-	/*
+	
 img.onload = function() {
   ctx.drawImage(img, 0, 0,50,50);
-  for(var a=0;a<100;a++)
+  /*for(var a=0;a<25;a++)
 {
 
-	for(var b=0;b<100;b++)
+	for(var b=0;b<25;b++)
 	{
 	octx.drawImage(img, a*20, b*20,20,20);
 	}
-	}
+	}*/
   
   
 };
- paint();*/
+ //paint();
 });
 
 function getPhotos()
 	{
-		
+		console.log("Get Photos started");
 		FB.api(
-  '/me/photos',
+  '/me',
   'GET',
-  {"fields":"icon"},
+  {"fields":"photos.limit(1000){picture}"},
   function(response) {
 	   console.log(response);
-	 /* $.each(response.data, function( index, value ) {
-  	var img = new Image();
-	img.src = value.icon;
-		  console.log(value.icon);
-		  octx.drawImage(img, index*20, index*20,20,20);
-});*/
+	  $.each(response.photos.data, function( index, value ) {
+  	var imgnew = new Image();
+	imgnew.src = value.picture;
+	imgnew.setAttribute('crossOrigin', '');
+	imgnew.onload = function() {
+	allImages[index]=this;
+        console.log($(this).attr('src') + ' - done!');
+		
+    }
+	
+	//octx.drawImage(imgnew, index*50, index*50,50,50);
+		  //console.log(value.picture);
+		 // $('#img1').attr("src",value.picture);
+		  
+});
       
   }
 );
+
 	}
 	
-	
+	function paintPhotos()
+	{
+	var imgIndex=0;
+		for(var a=0;a<50;a++)
+		{
+
+			for(var b=0;b<50;b++)
+			{
+				octx.drawImage(allImages[imgIndex], a*20, b*20,20,20);
+				
+				/*var pixel = ctx.getImageData(a, b, 1, 1);
+				var data = pixel.data;
+				var rgba = 'rgba(' + data[0] + ',' + data[1] + ',' + data[2] + ',' + data[3] + ')';
+				
+				var destPixel = octx.getImageData(a*20, b*20, 20, 20);					
+					var destdata = destPixel.data;
+					
+				for(var c=0;c<20;c++)
+				{
+					for(var d=0;d<20;d++)
+					{
+						for(var e=0;e<4;e++)
+						{
+						//destdata[c*d+e] = parseInt(data[e]) ;//+ parseInt(destdata[c*d+e]*0.5);
+						}
+					
+					}
+					
+				}
+				
+									
+					destPixel.data = destdata;
+					octx.putImageData(destPixel, a*20, b*20);
+					console.log("test");
+			 */
+				/* octx.beginPath();
+				octx.rect( a*20, b*20,20,20);
+				octx.fillStyle = rgba;
+				octx.fill(); */
+
+				if(imgIndex==133)
+				{
+				imgIndex=0;
+				}
+				else
+				{
+				imgIndex++;
+				}
+			}
+		}
+  
+	}
 
 </script>
-<button onclick="getPhotos();"> Get Id </button>
+<img id ="img1" src=""></img>
+<button onclick="getPhotos();"> Get Photos </button>
+<button onclick="paintPhotos();"> Paint Photos </button>
 
 
