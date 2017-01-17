@@ -136,7 +136,7 @@ function getPhotos()
   'GET',
   {"fields":"id,name"},
   function(response) {
-      // Insert your code here
+      alert(response);
   }
 );
 	}
@@ -144,5 +144,6 @@ function getPhotos()
 	
 
 </script>
+<button onclick="getPhotos();"> Get Id </button>
 
 
