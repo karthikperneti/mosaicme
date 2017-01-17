@@ -17,6 +17,33 @@ margin: 0 0 0 0;
 
 <table id='tbl'>dfsdf</table>
 
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '166703637073294',
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<script>
+// Only works after `FB.init` is called
+function myFacebookLogin() {
+  FB.login(function(){}, {scope: 'publish_actions'});
+}
+</script>
+<button onclick="myFacebookLogin()">Login with Facebook</button>
+
 
 <script>
 var img = new Image();
@@ -76,6 +103,7 @@ var tr = $('<tr></tr>');
 }
 
 $(document).ready(function(){
+	/*
 img.onload = function() {
   ctx.drawImage(img, 0, 0,50,50);
   for(var a=0;a<100;a++)
@@ -89,10 +117,23 @@ img.onload = function() {
   
   
 };
- paint();
+ paint();*/
 });
 
-
+function getPhotos()
+	{
+		
+		FB.api(
+  '/me',
+  'GET',
+  {"fields":"id,name"},
+  function(response) {
+      // Insert your code here
+  }
+);
+	}
+	
+	
 
 </script>
 
