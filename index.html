@@ -132,11 +132,16 @@ function getPhotos()
 	{
 		
 		FB.api(
-  '/me',
+  '/me/photos',
   'GET',
-  {"fields":"id,name"},
+  {"fields":"icon"},
   function(response) {
-      alert(response.id);
+	  $.each(response.data, function( index, value ) {
+  	var img = new Image();
+	img.src = value.icon;
+		  octx.drawImage(img, index*20, index*20,20,20);
+});
+      
   }
 );
 	}
