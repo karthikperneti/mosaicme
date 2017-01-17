@@ -22,7 +22,7 @@ margin: 0 0 0 0;
     FB.init({
       appId      : '166703637073294',
       xfbml      : true,
-      version    : 'v2.7'
+      version    : 'v2.8'
     });
     FB.AppEvents.logPageView();
   };
@@ -42,8 +42,15 @@ function myFacebookLogin() {
   FB.login(function(){}, {scope: 'publish_actions'});
 }
 </script>
+<body>
 <button onclick="myFacebookLogin()">Login with Facebook</button>
-
+	<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
+</body>
 
 <script>
 var img = new Image();
